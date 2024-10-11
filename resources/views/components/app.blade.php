@@ -8,13 +8,12 @@
     <title>ERP - @isset($title)
         @endisset
     </title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-        integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMj5tB+H4lZg20v/hyeqTf6mFobA2n25D/qx4nd" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="bg-white text-secondary font-roboto">
-
+    <x-navbar/>
     <main class="container mx-auto p-4">
         {{ $slot }}
     </main>
