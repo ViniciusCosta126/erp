@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoriaRequest;
 use App\Models\Categoria;
 use App\Repositories\CategoriaRepository;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class CategoriaController extends Controller
         return view('pages.categorias.create');
     }
 
-    public function storeCategoria(Request $request)
+    public function storeCategoria(CategoriaRequest $request)
     {
         $categoria = $this->categoriaRepository->create($request);
 
@@ -53,7 +54,7 @@ class CategoriaController extends Controller
             return view('pages.categorias.edit')->with('categoria', $categoria);
         }
     }
-    public function saveCategoria(Request $request, $id)
+    public function saveCategoria(CategoriaRequest $request, $id)
     {
         $categoria = $this->categoriaRepository->find($id);
 
