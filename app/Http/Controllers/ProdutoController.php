@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProdutoRequest;
 use App\Models\Categoria;
 use App\Models\Produto;
 use App\Repositories\ProdutoRepository;
@@ -29,7 +30,7 @@ class ProdutoController extends Controller
         return view('pages.produtos.create')->with('categorias', $categorias);
     }
 
-    public function storeProduto(Request $request)
+    public function storeProduto(ProdutoRequest $request)
     {
         $produto = $this->produtoRepository->create($request);
         return to_route('produto.index');
@@ -46,7 +47,7 @@ class ProdutoController extends Controller
         return view('pages.produtos.edit')->with('produto', $produto)->with('categorias', $categorias);
     }
 
-    public function saveEditProduto(Request $request, $id)
+    public function saveEditProduto(ProdutoRequest $request, $id)
     {
         $produto = $this->produtoRepository->find($id);
         $produto->fill($request->all());
