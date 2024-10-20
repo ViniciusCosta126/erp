@@ -4,13 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use App\Models\Produto;
+use App\Repositories\ProdutoRepository;
 use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
 {
+
+    protected $produtoRepository;
+
+    public function __construct(ProdutoRepository $produtoRepository)
+    {
+        $this->produtoRepository = $produtoRepository;
+    }
+
     public function index()
     {
-        $produtos = Produto::where('status', 1)->get();
+        $produtos = $this->produtoRepository->all();
         return view('pages.produtos.index')->with('produtos', $produtos);
     }
 
@@ -22,13 +31,13 @@ class ProdutoController extends Controller
 
     public function storeProduto(Request $request)
     {
-        $produto = Produto::create($request->all());
+        $produto = $this->produtoRepository->create($request);
         return to_route('produto.index');
     }
 
     public function editProduto($id)
     {
-        $produto = Produto::find($id);
+        $produto = $this->produtoRepository->find($id);
         $categorias = Categoria::where('status', 1)->get();
         if (empty($produto)) {
             return to_route('produto.index')->with('error', "Produto não encontrado");
@@ -39,7 +48,7 @@ class ProdutoController extends Controller
 
     public function saveEditProduto(Request $request, $id)
     {
-        $produto = Produto::where('id', $id)->first();
+        $produto = $this->produtoRepository->find($id);
         $produto->fill($request->all());
         $produto->save();
 
@@ -48,7 +57,7 @@ class ProdutoController extends Controller
 
     public function deleteProduto($id)
     {
-        $produto = Produto::find($id);
+        $produto = $this->produtoRepository->find($id);
         $produto->delete();
         return to_route('produto.index');
     }

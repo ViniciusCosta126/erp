@@ -3,13 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
+use App\Repositories\CategoriaRepository;
 use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
 {
+    protected $categoriaRepository;
+
+    public function __construct(CategoriaRepository $categoriaRepository)
+    {
+        $this->categoriaRepository = $categoriaRepository;
+    }
     public function index()
     {
-        $categorias = Categoria::where('status', 1)->get();
+        $categorias = $this->categoriaRepository->all();
         return view('pages.categorias.index')->with('categorias', $categorias);
     }
 
@@ -20,14 +27,14 @@ class CategoriaController extends Controller
 
     public function storeCategoria(Request $request)
     {
-        $categoria = Categoria::create($request->all());
+        $categoria = $this->categoriaRepository->create($request);
 
         return to_route('categoria.index')->with('success', 'Categoria Criado com sucesso');
     }
 
     public function destroy($id)
     {
-        $categoria = Categoria::find($id);
+        $categoria = $this->categoriaRepository->find($id);
 
         if (empty($categoria)) {
             return to_route('categoria.index')->with('error', 'Categoria não encontrada');
@@ -39,7 +46,7 @@ class CategoriaController extends Controller
 
     public function editCategoria($id)
     {
-        $categoria = Categoria::find($id);
+        $categoria = $this->categoriaRepository->find($id);
         if (empty($categoria)) {
             return to_route('categoria.index')->with('error', 'Categoria não encontrada');
         } else {
@@ -48,7 +55,7 @@ class CategoriaController extends Controller
     }
     public function saveCategoria(Request $request, $id)
     {
-        $categoria = Categoria::find($id);
+        $categoria = $this->categoriaRepository->find($id);
 
         if (empty($categoria)) {
             return to_route('categoria.index')->with('error', 'Categoria não encontrada');
