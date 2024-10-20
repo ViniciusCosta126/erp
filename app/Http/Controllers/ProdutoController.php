@@ -33,15 +33,16 @@ class ProdutoController extends Controller
     public function storeProduto(ProdutoRequest $request)
     {
         $produto = $this->produtoRepository->create($request);
-        return to_route('produto.index');
+        return to_route('produto.index')->with("mensagemSucesso", "Produto: $produto->nome criado com sucesso!");
     }
 
     public function editProduto($id)
     {
         $produto = $this->produtoRepository->find($id);
+
         $categorias = Categoria::where('status', 1)->get();
         if (empty($produto)) {
-            return to_route('produto.index')->with('error', "Produto não encontrado");
+            return to_route('produto.index')->with('mensagemAlerta', "Produto não encontrado");
         }
 
         return view('pages.produtos.edit')->with('produto', $produto)->with('categorias', $categorias);
@@ -50,16 +51,26 @@ class ProdutoController extends Controller
     public function saveEditProduto(ProdutoRequest $request, $id)
     {
         $produto = $this->produtoRepository->find($id);
+
+        if (empty($produto)) {
+            return to_route('produto.index')->with('mensagemAlerta', "Produto não encontrado");
+        }
+
         $produto->fill($request->all());
         $produto->save();
 
-        return to_route('produto.index');
+        return to_route('produto.index')->with("mensagemSucesso", "Produto: $produto->nome alterado com sucesso!");
     }
 
     public function deleteProduto($id)
     {
         $produto = $this->produtoRepository->find($id);
+
+        if (empty($produto)) {
+            return to_route('produto.index')->with('mensagemAlerta', "Produto não encontrado");
+        }
+
         $produto->delete();
-        return to_route('produto.index');
+        return to_route('produto.index')->with('mensagemSucesso', "Produto deletado com sucesso!");
     }
 }

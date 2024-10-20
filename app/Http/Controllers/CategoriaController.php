@@ -15,6 +15,7 @@ class CategoriaController extends Controller
     {
         $this->categoriaRepository = $categoriaRepository;
     }
+
     public function index()
     {
         $categorias = $this->categoriaRepository->all();
@@ -30,7 +31,7 @@ class CategoriaController extends Controller
     {
         $categoria = $this->categoriaRepository->create($request);
 
-        return to_route('categoria.index')->with('success', 'Categoria Criado com sucesso');
+        return to_route('categoria.index')->with("mensagemSucesso", "Categoria: $categoria->nome_categoria criada com sucesso!");
     }
 
     public function destroy($id)
@@ -38,7 +39,7 @@ class CategoriaController extends Controller
         $categoria = $this->categoriaRepository->find($id);
 
         if (empty($categoria)) {
-            return to_route('categoria.index')->with('error', 'Categoria não encontrada');
+            return to_route('categoria.index')->with('mensagemAlerta', "Categoria não encontrada");
         } else {
             $categoria->delete();
             return to_route('categoria.index')->with('success', 'Categoria deletada com sucesso');
@@ -49,7 +50,7 @@ class CategoriaController extends Controller
     {
         $categoria = $this->categoriaRepository->find($id);
         if (empty($categoria)) {
-            return to_route('categoria.index')->with('error', 'Categoria não encontrada');
+            return to_route('categoria.index')->with('mensagemAlerta', "Categoria não encontrada");
         } else {
             return view('pages.categorias.edit')->with('categoria', $categoria);
         }
@@ -59,11 +60,11 @@ class CategoriaController extends Controller
         $categoria = $this->categoriaRepository->find($id);
 
         if (empty($categoria)) {
-            return to_route('categoria.index')->with('error', 'Categoria não encontrada');
+            return to_route('categoria.index')->with('mensagemAlerta', "Categoria não encontrada");
         } else {
             $categoria->fill($request->all());
             $categoria->save();
-            return to_route('categoria.index')->with('success', 'Categoria alterada com sucesso');
+            return to_route('categoria.index')->with("mensagemSucesso", "Categoria: $categoria->nome_categoria alterada com sucesso!");
         }
     }
 }

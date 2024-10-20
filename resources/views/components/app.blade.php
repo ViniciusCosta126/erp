@@ -17,9 +17,19 @@
     <div class="flex">
         <x-navbar />
         <main class=" flex-1 mx-auto p-4">
+
+            @if (session('mensagemSucesso'))
+                <x-common.messageSuccess mensageSucesso="{{ session('mensagemSucesso') }}" />
+            @endif
+
+            @if (session('mensagemAlerta'))
+                <x-common.messageAlert mensagemAlerta={{ session('mensagemAlerta') }} />
+            @endisset
+
             @yield('title-page')
             @if ($errors->any())
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                    role="alert">
                     <ul class="list-disc pl-5">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -29,8 +39,8 @@
             @endif
 
             {{ $slot }}
-        </main>
-    </div>
+    </main>
+</div>
 
 </body>
 
