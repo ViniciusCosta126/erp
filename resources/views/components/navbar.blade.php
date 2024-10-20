@@ -11,7 +11,7 @@
     <aside class="bg-gray-800 text-white w-64 min-h-screen p-4">
         <nav>
             <ul class="space-y-2">
-                <li class="opcion-con-desplegable">
+                {{-- <li class="opcion-con-desplegable">
                     <div class="flex items-center justify-between p-2 hover:bg-gray-700">
                         <div class="flex items-center">
                             <i class="fas fa-calendar-alt mr-2"></i>
@@ -61,7 +61,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
                 <li class="opcion-con-desplegable">
                     <div class="flex items-center justify-between p-2 hover:bg-gray-700">
                         <div class="flex items-center">
@@ -72,7 +72,8 @@
                     </div>
                     <ul class="desplegable ml-4 hidden">
                         <li>
-                            <a href="#" class="block p-2 hover:bg-gray-700 flex items-center">
+                            <a href="{{ route('produto.index') }}"
+                                class="block p-2 hover:bg-gray-700 flex items-center">
                                 Produtos
                             </a>
                             <a href="{{ route('categoria.index') }}"
