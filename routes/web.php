@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ProdutoController;
 use App\Models\Categoria;
 use Illuminate\Support\Facades\Route;
@@ -27,4 +28,10 @@ Route::prefix('produtos')->group(function () {
     Route::get('/editar-produto/{id}', [ProdutoController::class, 'editProduto'])->name('produto.edit');
     Route::put('/editar-produto-save/{id}', [ProdutoController::class, 'saveEditProduto'])->name('produto.save');
     Route::delete('/destroy/{id}', [ProdutoController::class, 'deleteProduto'])->name('produto.destroy');
+});
+
+
+Route::prefix('clientes')->group(function () {
+    Route::get('/', [ClienteController::class, 'index'])->name('cliente.index');
+    Route::get('/criar-cliente', [ClienteController::class, 'criarCliente'])->name('cliente.criar-cliente');
 });

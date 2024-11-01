@@ -83,6 +83,14 @@
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a href="{{ route('cliente.index') }}" class="flex items-center p-2 hover:bg-gray-700">
+                        <i class="fa-solid fa-users mr-2"></i>
+                        <span>
+                            Clientes
+                        </span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </aside>
